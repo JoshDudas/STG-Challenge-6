@@ -22,7 +22,11 @@ class TestAutomatedChromeBrowser(unittest.TestCase):
         search_field.send_keys("Nissan")
         search_btn.click()
 
-        models_returned = self.driver.find_elements(By.XPATH, "//table[@id='serverSideDataTable']//div[")
+        driverwait.until(expected_conditions.visibility_of_element_located((By.XPATH, "//table[@id='serverSideDataTable']//span[@data-uname='lotsearchLotmodel']")))
+
+        models_returned = self.driver.find_elements(By.XPATH, "//table[@id='serverSideDataTable']//span[@data-uname='lotsearchLotmodel']")
+
+
 
     def tearDown(self):
         self.driver.close()
