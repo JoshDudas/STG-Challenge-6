@@ -22,11 +22,23 @@ class TestAutomatedChromeBrowser(unittest.TestCase):
         search_field.send_keys("Nissan")
         search_btn.click()
 
-        driverwait.until(expected_conditions.visibility_of_element_located((By.XPATH, "//table[@id='serverSideDataTable']//span[@data-uname='lotsearchLotmodel']")))
+        driverwait.until(expected_conditions.visibility_of_element_located((By.XPATH, "//table[@id='serverSideDataTable']//a[@data-uname='lotsearchLotnumber']")))
 
         models_returned = self.driver.find_elements(By.XPATH, "//table[@id='serverSideDataTable']//span[@data-uname='lotsearchLotmodel']")
+        lotnumbers_returned = self.driver.find_elements(By.XPATH, "//table[@id='serverSideDataTable']//a[@data-uname='lotsearchLotnumber']")
 
+        model_list = []
 
+        for model in models_returned:
+            model_list.append(model.text)
+
+        try:
+            list_position = model_list.index("SKYLINE")
+            skyline_lotnumber = lotnumbers_returned[list_position]
+            skyline_lotnumber.click()
+            driverwait.until(expected_conditions.visibility_of_element_located((By.XPATH, "//label[@data-uname='lotdetailTitledescription']")))
+        except ValueError:
+            print("Model SKYLINE not found")
 
     def tearDown(self):
         self.driver.close()
