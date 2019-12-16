@@ -36,9 +36,10 @@ class TestAutomatedChromeBrowser(unittest.TestCase):
             list_position = model_list.index("SKYLINE")
             skyline_lotnumber = lotnumbers_returned[list_position]
             skyline_lotnumber.click()
-            driverwait.until(expected_conditions.visibility_of_element_located((By.XPATH, "//label[@data-uname='lotdetailTitledescription']")))
+            driverwait.until(expected_conditions.visibility_of_element_located((By.XPATH, '//label[@data-uname="lotdetailTitledescription"]')))
         except ValueError:
-            print("Model SKYLINE not found")
+            print("Model SKYLINE not found (see screenshot)")
+            self.driver.save_screenshot("challenge_6_valueError_screenshot.png")
 
     def tearDown(self):
         self.driver.close()
