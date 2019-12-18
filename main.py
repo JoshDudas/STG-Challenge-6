@@ -28,9 +28,9 @@ class TestAutomatedChromeBrowser(unittest.TestCase):
 
     def get_search_results(self):
         models_returned = self.driver.find_elements(By.XPATH,
-                                                    "//table[@id='serverSideDataTable']//span[@data-uname='lotsearchLotmodel']")
+                                                    "//*[@id='serverSideDataTable']//*[@data-uname='lotsearchLotmodel']")
         self.lotnumbers_returned = self.driver.find_elements(By.XPATH,
-                                                        "//table[@id='serverSideDataTable']//a[@data-uname='lotsearchLotnumber']")
+                                                        "//*[@id='serverSideDataTable']//*[@data-uname='lotsearchLotnumber']")
         for model in models_returned:
             self.model_list.append(model.text)
 
@@ -39,11 +39,10 @@ class TestAutomatedChromeBrowser(unittest.TestCase):
             list_position = self.model_list.index("SKYLINE")
             skyline_lotnumber = self.lotnumbers_returned[list_position]
             skyline_lotnumber.click()
-            self.driverwait.until(expected_conditions.visibility_of_element_located((By.XPATH, '//label[@data-uname="lotdetailTitledescription"]')))
+            self.driver_wait.until(expected_conditions.visibility_of_element_located((By.XPATH, '//*[@data-uname="lotdetailTitledescription"]')))
         except ValueError:
             print("Model SKYLINE not found (see screenshot)")
             self.driver.save_screenshot("challenge_6_valueError_screenshot.png")
-
 
     def test_getSkyLine(self):
         self.load_and_search_site()
@@ -53,6 +52,7 @@ class TestAutomatedChromeBrowser(unittest.TestCase):
 
     def tearDown(self):
         self.driver.close()
+
 
 if __name__ == '__main__':
     unittest.main()
